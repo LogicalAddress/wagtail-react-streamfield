@@ -65,8 +65,11 @@ class NewBaseStructBlock(BaseStructBlock):
         for k, child_block in self.child_blocks.items():
             child_errors = (None if children_errors is None
                             else children_errors.get(k))
-            child_value = value.get(k, child_block.get_default())
-            html = child_block.get_instance_html(child_value,
+            child_value = None
+            html = None
+            if value:
+                child_value = value.get(k, child_block.get_default())
+                html = child_block.get_instance_html(child_value,
                                                  errors=child_errors)
             child_value = BlockData({
                 'id': str(uuid4()),
